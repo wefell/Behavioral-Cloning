@@ -142,7 +142,21 @@ Here are examples of the range of the random brightness adjustments applied to i
 ![alt text](./images/brightness_8.png "brightness 1.1")
 ![alt text](./images/brightness_9.png "brightness 1.2")
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+
+After collecting and augmenting the data, I had a total of 906,800 images. I then preprocessed the data using a keras lambda layer to normalize the image data and a cropping layer to crop 70 pixels from the top of the image, 25 pixels from the bottom, and 30 pixels from each side. Here are examples of the final images fed into the neural network:
+
+![alt text](./images/final_1.png "Final 1")
+![alt text](./images/final_2.png "Final 2")
+![alt text](./images/final_3.png "Final 3")
+![alt text](./images/final_4.png "Final 4")
+![alt text](./images/final_5.png "Final 5")
+![alt text](./images/final_6.png "Final 6")
+![alt text](./images/final_7.png "Final 7")
+![alt text](./images/final_8.png "Final 8")
+![alt text](./images/final_9.png "Final 9")
+![alt text](./images/final_10.png "Final 10")
+
+
 
 
 I finally randomly shuffled the data set and put Y% of the data into a validation set. 
