@@ -120,7 +120,7 @@ I then recorded the vehicle recovering from the left side and right sides of the
 
 Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the dataset, I flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
 
 ![alt text](./images/normal_image.png "Normal")
 ![alt text](./images/flipped_image.png "Flipped")
