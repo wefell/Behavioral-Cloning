@@ -130,7 +130,7 @@ Here is the distribution of steering angles after adding offset angles for left 
 
 ![alt text](./images/angle_distribution.png "Steering Angles")
 
-Here are 10 examples of the range of random brightness changes applied to images:
+Here are examples of the range of the random brightness adjustments applied to images:
 
 ![alt text](./images/brightness_range_1.png "brightness 0.5")
 ![alt text](./images/brightness_range_2.png "brightness 0.6")
