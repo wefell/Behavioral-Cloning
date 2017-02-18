@@ -122,8 +122,8 @@ Then I repeated this process on track two in order to get more data points.
 
 To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
 
-![alt text][image6]
-![alt text][image7]
+![alt text](./images/normal_image.png "Normal")
+![alt text](./images/flipped_image.png "Flipped")
 
 Etc ....
 
