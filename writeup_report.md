@@ -108,17 +108,17 @@ The final model architecture consisted of a convolution neural network with the 
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+I recorded several laps driving in the center of the road to teach the vehicle good driving behavior. I did this on both tracks, driving in both directions. Here is an example image of center lane driving:
 
 ![alt text](./images/center_driving_example.png "Center Driving")
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from the left side :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to recover from off-center positions. These images show what a recovery looks like starting from the left side :
 
 ![alt text](./images/recovery_1.png "Recovery Driving")
 ![alt text](./images/recovery_2.png "Recovery Driving")
 ![alt text](./images/recovery_3.png "Recovery Driving")
 
-Then I repeated this process on track two in order to get more data points.
+
 
 To augment the dataset, I flipped images and angles thinking that this would normalize the distrubtion of string angles. For example, here is an image that has then been flipped:
 
