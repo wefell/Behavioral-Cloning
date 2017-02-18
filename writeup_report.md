@@ -50,23 +50,21 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model consists of three covnets with with 5x5 filter sizes and depths between 24 and 48, two covnets with 3x3 filter sizes and depths of 64. Lasty, there are three fully connected layers with depths of 100, 50, and 10 (model.py lines 74-86).
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The model includes RELU activate functions to introduce nonlinearity (code lines 77-81), and the data is normalized in the model using a Keras lambda layer (code line 75). 
 
-####2. Attempts to reduce overfitting in the model
+####2. Attempts to reduce overfitting in the model 
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
-
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+Roughly half of the training data was captured by driving around the tracks in the opposite direction. All images were augmented by applying a random degree brightness change. All images were duplicated and flipped to avoid the model overfitting to one steering direction. The model was trained and validated on different data sets. The model was also tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+This model used an adam optimizer, so the learning rate was not tuned manually (model.py line ).
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving and recovery maneuvers from both the left and the right sides of the road.
 
 For details about how I created the training data, see the next section. 
 
@@ -74,27 +72,39 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The strategy for deriving a model architecture was to find a model that has proven success, rather than to reinvent the wheel. Many Udacity students have reported success with [Nvidia's CNN designed for self-driving cars](https://arxiv.org/pdf/1604.07316v1.pdf).
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+The model immediately performed well, but was showin signs of overfitting. I experimented with adding dropout to a variety of combination of layers, with little improvement. The car would zig-zag on parts of the track, drive very smoothly on other parts, and drive straight off the track on otherts. This indicated that the model was still overfitting to parts of the data and not generalizing.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+To combat the overfitting, I drove both tracks in both directions. This included center driving and recovery maneuvers. When the car showed signs of trouble in certain parts of the track, I would go back and drive that part of the track with center driver and recovery maneuvers, in both direcetions. However, as soon as the car improved driving on one part of the track, it would performed worse on other parts. This told me that the model was still not generalizing enough.
 
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to apply random brightness levels to all of the images. This provided enough variance in the data to enable the model to generalize, rather than to memorize. I saw an immediate and drastic improvement in the car's ability to navigate the track. It performed well in all areas of the track and recoverered well. It was immediately obvious that the model had learned and was generalizing well.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture consisted of a convolution neural network with the following layers and layer sizes:
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+* Input (160x320x3)
+* Lambda layer (normalize image data to betweeen -0.5 and 0.5)
+* Cropping2D (new image shape is 65x260x3)
+* Conv Layer (5x5x3 filter, stride 2 to 31x128x24)
+* Relu
+* Conv Layer (5x5x24 filter, stride 2 to 14x62x36)
+* Relu
+* Conv Layer (5x5x36 filter, stride 2 to 5x29x48)
+* Relu
+* Conv Layer (3x3x48 filter, stide 1 to 3x27x64)
+* Relu
+* Conv Layer (3x3x64 filter, stide 1 to 1x25x64)
+* Relu
+* Flatten (1536 nodes)
+* Fully connected layer (with added dropout) (1600->100)
+* Fully connected layer (with added dropout) (100->50)
+* Fully connected layer (with added dropout) (50->10)
+* Output (10->1)
 
-![alt text][image1]
 
 ####3. Creation of the Training Set & Training Process
 
