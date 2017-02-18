@@ -125,9 +125,21 @@ To augment the dataset, I flipped images and angles thinking that this would nor
 ![alt text](./images/normal_image.png "Normal")
 ![alt text](./images/flipped_image.png "Flipped")
 
-Here is the distribution of steering angles after flipping and offsetting for left and right cameras:
+
+Here is the distribution of steering angles after adding offset angles for left and right cameras and adding flipped images/angles:
 
 ![alt text](./images/angle_distribution.png "Steering Angles")
+
+Here are 10 examples of the range of random brightness changes applied to images:
+
+![alt text](./images/brightness_range_1.png "brightness 1")
+![alt text](./images/brightness_range_2.png "brightness 2")
+![alt text](./images/brightness_range_3.png "brightness 3")
+![alt text](./images/brightness_range_4.png "brightness 4")
+![alt text](./images/brightness_range_5.png "brightness 5")
+![alt text](./images/brightness_range_6.png "brightness 6")
+![alt text](./images/brightness_range_7.png "brightness 7")
+![alt text](./images/brightness_range_8.png "brightness 8")
 
 After the collection process, I had X number of data points. I then preprocessed this data by ...
 
