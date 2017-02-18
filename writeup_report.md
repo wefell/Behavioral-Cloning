@@ -120,12 +120,14 @@ I then recorded the vehicle recovering from the left side and right sides of the
 
 Then I repeated this process on track two in order to get more data points.
 
-To augment the dataset, I flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the dataset, I flipped images and angles thinking that this would normalize the distrubtion of string angles. For example, here is an image that has then been flipped:
 
 ![alt text](./images/normal_image.png "Normal")
 ![alt text](./images/flipped_image.png "Flipped")
 
-Etc ....
+Here is the distribution of steering angles after flipping and offsetting for left and right cameras:
+
+![alt text](./images/angle_distribution.png "Steering Angles")
 
 After the collection process, I had X number of data points. I then preprocessed this data by ...
 
