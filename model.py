@@ -7,25 +7,29 @@ import keras
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Dropout
 from keras.layers.convolutional import Convolution2D, Cropping2D
-from keras.layers.pooling import MaxPooling2D
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 
+# create list of lines from read driving_log.csv
 lines = []
 with open('./data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
         lines.append(line)
 
+# split data into training and validation sets
 train_samples, validation_samples = train_test_split(lines, test_size=0.2)
 
+# generator function yielding image arrays and steerig angles
 def generator(lines, batch_size=32):
     num_lines = len(lines)
     while 1:
         shuffle(lines)
         for offset in range(0, num_lines, batch_size):
             batch_lines = lines[offset:offset+batch_size]
-            
+
+            # apply random brightness to images
+            # offset steering angles on left and right camera images
             images = []
             measurements = []
             for line in batch_lines:
@@ -35,7 +39,6 @@ def generator(lines, batch_size=32):
                     filename = tokens[-1]
                     local_path = './data/IMG/' + filename
                     image = cv2.imread(local_path)
-##                    image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
                     change_pct = random.uniform(0.4, 1.2)
                     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
                     hsv[:,:,2] = hsv[:,:,2] * change_pct
@@ -47,6 +50,7 @@ def generator(lines, batch_size=32):
                 measurements.append(measurement+correction)
                 measurements.append(measurement-correction)
 
+            # add flipped images
             augmented_images = []
             augmented_measurements = []
             for image, measurement in zip(images, measurements):
@@ -65,8 +69,8 @@ def generator(lines, batch_size=32):
 train_generator = generator(train_samples, batch_size=32)
 validation_generator = generator(validation_samples, batch_size=32)
 
-total_samples = (len(train_samples)*3)*2
-
+# cnn - nvidia architechture
+# preprocessing - normalize image data and crop images
 model = Sequential()
 model.add(Lambda(lambda x: x / 255.0 - 0.5, input_shape=(160,320,3)))
 model.add(Cropping2D(cropping=((70,25),(30,30))))
@@ -81,12 +85,15 @@ model.add(Dense(50))
 model.add(Dense(10))
 model.add(Dense(1))
 
+# compile and train the model using the generator function
 model.compile(optimizer='adam', loss='mse')
 model.fit_generator(train_generator, samples_per_epoch=13824,
                     validation_data=validation_generator,
                     nb_val_samples=len(validation_samples), nb_epoch=15)
 
+# save model
 model.save('model.h5')
 
+# fix for known keras error
 from keras import backend as K
 K.clear_session()
