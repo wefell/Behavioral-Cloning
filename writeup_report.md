@@ -159,7 +159,9 @@ The dataset was shuffled and split into training and valdiation sets. The valida
 
 ![alt text](./images/Screen Shot 2017-02-17 at 1.38.01 PM.png "trained") 
 
-Below is the car driving on both tracks:
+Below is the car driving on both tracks 1 and 2:
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/olzW_mLLwZc/0.jpg)](https://youtu.be/olzW_mLLwZc)
 
 
 
