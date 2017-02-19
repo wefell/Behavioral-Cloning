@@ -164,8 +164,10 @@ After collecting and augmenting the data, I had a total of 906,800 images. I the
 
 
 
-The dataset was shuffled and split in to training and valdiation sets. The validation set consisten of a random 20% of the data. Both sets were shuffle and the neural network was trained:
+The dataset was shuffled and split into training and valdiation sets. The validation set consisten of a random 20% of the data. Both sets were shuffled and the neural network was trained with 13824 images per epoch for 15 epochs. Training and validation losses were 0.0329 and 0.0291, respectively. 
 
 ![alt text](./images/Screen Shot 2017-02-17 at 1.38.01 PM.png "trained") 
+
+
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
