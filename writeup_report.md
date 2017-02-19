@@ -112,6 +112,8 @@ I recorded several laps driving in the center of the road to teach the vehicle g
 
 ![alt text](./images/center_driving_example.png "Center Driving")
 
+
+
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to recover from off-center positions. These images show what a recovery looks like starting from the left side :
 
 ![alt text](./images/recovery_1.png "Recovery Driving")
@@ -126,9 +128,12 @@ To augment the dataset, I flipped images and angles thinking that this would nor
 ![alt text](./images/flipped_image.png "Flipped")
 
 
+
 Here is the distribution of steering angles after adding offset angles for left and right cameras and adding flipped images/angles:
 
 ![alt text](./images/angle_distribution.png "Steering Angles")
+
+
 
 Here are examples of the range of the random brightness adjustments applied to images:
 
@@ -143,7 +148,8 @@ Here are examples of the range of the random brightness adjustments applied to i
 ![alt text](./images/brightness_9.png "brightness 1.2")
 
 
-After collecting and augmenting the data, I had a total of 906,800 images. I then preprocessed the data using a keras lambda layer to normalize the image data and a cropping layer to crop 70 pixels from the top of the image, 25 pixels from the bottom, and 30 pixels from each side. Here are examples of the final images fed into the neural network:
+
+After collecting and augmenting the data, I had a total of 906,800 images. I then preprocessed the data using a keras lambda layer to normalize the image data and a cropping layer to crop 70 pixels from the top of the image, 25 pixels from the bottom, and 30 pixels from each side. The purpose of cropping is to greatly reduce the amount of irrelavent data, freeing up capacity in the neural network to learn from the most relavant data. Here are examples of the final images fed into the neural network:
 
 ![alt text](./images/final_1.png "Final 1")
 ![alt text](./images/final_2.png "Final 2")
@@ -158,7 +164,8 @@ After collecting and augmenting the data, I had a total of 906,800 images. I the
 
 
 
+The dataset was shuffled and split in to training and valdiation sets. The validation set consisten of a random 20% of the data. Both sets were shuffle and the neural network was trained:
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
