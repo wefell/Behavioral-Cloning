@@ -12,15 +12,6 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-[//]: # (Image References)
-
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -50,17 +41,17 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of three covnets with with 5x5 filter sizes and depths between 24 and 48, two covnets with 3x3 filter sizes and depths of 64. Lasty, there are three fully connected layers with depths of 100, 50, and 10 (model.py lines 74-86).
+My model consists of three covnets with 5x5 filter sizes and depths between 24 and 48, two covnets with 3x3 filter sizes and depths of 64. Lasty, there are three fully connected layers with depths of 100, 50, and 10 (model.py lines 74-86).
 
-The model includes RELU activate functions to introduce nonlinearity (code lines 77-81), and the data is normalized in the model using a Keras lambda layer (code line 75). 
+The model includes RELU activation functions to introduce nonlinearity (code lines 77-81), and the data is normalized in the model using a Keras lambda layer (code line 75). 
 
 ####2. Attempts to reduce overfitting in the model 
 
-Roughly half of the training data was captured by driving around the tracks in the opposite direction. All images were augmented by applying a random degree brightness change. All images were duplicated and flipped to avoid the model overfitting to one steering direction. The model was trained and validated on different data sets. The model was also tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+Roughly half of the training data was captured by driving around the tracks in the opposite direction. All images were augmented by applying a random percent of brightness change. All images were duplicated and flipped to avoid the model overfitting to one steering direction. The model was trained and validated on different data sets. The model was also tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
 
-This model used an adam optimizer, so the learning rate was not tuned manually (model.py line ).
+This model used an adam optimizer, so the learning rate was not tuned manually.
 
 ####4. Appropriate training data
 
@@ -74,13 +65,13 @@ For details about how I created the training data, see the next section.
 
 The strategy for deriving a model architecture was to find a model that has proven success, rather than to reinvent the wheel. Many Udacity students have reported success with [Nvidia's CNN designed for self-driving cars](https://arxiv.org/pdf/1604.07316v1.pdf).
 
-The model immediately performed well, but was showin signs of overfitting. I experimented with adding dropout to a variety of combination of layers, with little improvement. The car would zig-zag on parts of the track, drive very smoothly on other parts, and drive straight off the track on otherts. This indicated that the model was still overfitting to parts of the data and not generalizing.
+The model immediately performed well, but was showing signs of overfitting. I experimented with adding dropout to a variety of combination of layers, with little if any improvement. The car would zig-zag on parts of the track, drive very smoothly on other parts, and drive straight off the track on otherts. This indicated that the model was still overfitting to parts of the data and not generalizing.
 
-To combat the overfitting, I drove both tracks in both directions. This included center driving and recovery maneuvers. When the car showed signs of trouble in certain parts of the track, I would go back and drive that part of the track with center driver and recovery maneuvers, in both direcetions. However, as soon as the car improved driving on one part of the track, it would performed worse on other parts. This told me that the model was still not generalizing enough.
+To combat the overfitting, I drove both tracks in both directions. This included center driving and recovery maneuvers. When the car showed signs of trouble in certain parts of the track, I would go back and drive that part of the track with center driving and recovery maneuvers, in both directions. However, as soon as the car improved on one part of the track, it would performed worse on other parts. This told me that the model was still not generalizing well enough.
 
 The final step was to apply random brightness levels to all of the images. This provided enough variance in the data to enable the model to generalize, rather than to memorize. I saw an immediate and drastic improvement in the car's ability to navigate the track. It performed well in all areas of the track and recoverered well. It was immediately obvious that the model had learned and was generalizing well.
 
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+At the end of the process, the vehicle is able to drive autonomously around both tracks without leaving the road.
 
 ####2. Final Model Architecture
 
@@ -135,7 +126,7 @@ Here is the distribution of steering angles after adding offset angles for left 
 
 
 
-Here are examples of the range of the random brightness adjustments applied to images:
+Applying brightness changes did wonders in preventing overfitting. Here are examples of the range of the random brightness adjustments applied to images:
 
 ![alt text](./images/brightness_1.png "brightness 0.4")
 ![alt text](./images/brightness_2.png "brightness 0.5")
@@ -149,7 +140,7 @@ Here are examples of the range of the random brightness adjustments applied to i
 
 
 
-After collecting and augmenting the data, I had a total of 906,800 images. I then preprocessed the data using a keras lambda layer to normalize the image data and a cropping layer to crop 70 pixels from the top of the image, 25 pixels from the bottom, and 30 pixels from each side. The purpose of cropping is to greatly reduce the amount of irrelavent data, freeing up capacity in the neural network to learn from the most relavant data. Here are examples of the final images fed into the neural network:
+After collecting and augmenting the data, I had a total of 906800 images. I then preprocessed the data using a keras lambda layer to normalize the image data and a cropping layer to crop 70 pixels from the top of the image, 25 pixels from the bottom, and 30 pixels from each side. The purpose of cropping is to greatly reduce the amount of irrelavent data, freeing up capacity in the neural network to learn from the most relavant data. Here are examples of the final images fed into the neural network:
 
 ![alt text](./images/final_1.png "Final 1")
 ![alt text](./images/final_2.png "Final 2")
@@ -168,6 +159,9 @@ The dataset was shuffled and split into training and valdiation sets. The valida
 
 ![alt text](./images/Screen Shot 2017-02-17 at 1.38.01 PM.png "trained") 
 
+Below is the car driving on both tracks:
 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+The car now drives very smoothly on both tracks, with no major problem areas on the tracks. I think I could have done it with a lot less images, if only I had realized the power of data augmentation sooner. The two things that had the most visible effect during testing were adding random brightness and cropping more of the image from all sides. This supplied much more variety and much less irrelavent data, making my neural network much more powerful in its learning. If I were to do it again, I would implement a few more methods of image augmentation right away and drive less.
+
