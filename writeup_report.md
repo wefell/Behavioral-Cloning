@@ -164,7 +164,7 @@ After collecting and augmenting the data, I had a total of 906800 images. I then
 
 The dataset was shuffled and split into training and valdiation sets. The validation set consisten of a random 20% of the data. Both sets were shuffled and the neural network was trained with 13824 images per epoch for 200 epochs. I implementated a callback using ModelCheckpoint and set it to save a new model.h5 every time the validation loss improved. After the model was done training tested the various weights. Through a process of trial and error I decided to use the weights from epoch 196 where training and validation losses were 0.03 and 0.02, respectively. Using these weights, the car drives smoothly down the center of the road in both track 1 and track 2.
 
-Below is the car driving on both tracks 1 and 2:
+The below pictures are links to youtube videos of the car driving on both tracks 1 and 2:
 
 [![Track 1](http://img.youtube.com/vi/c4xeH3n3YHI/0.jpg)](https://youtu.be/c4xeH3n3YHI)
 [![Track 2](http://img.youtube.com/vi/1QS6gAjilr4/0.jpg)](https://youtu.be/1QS6gAjilr4)
