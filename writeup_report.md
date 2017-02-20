@@ -161,8 +161,8 @@ The dataset was shuffled and split into training and valdiation sets. The valida
 
 Below is the car driving on both tracks 1 and 2:
 
-[![Track 1](http://img.youtube.com/vi/olzW_mLLwZc/0.jpg)](https://youtu.be/olzW_mLLwZc)
-[![Track 2](http://img.youtube.com/vi/Ez6QAyh3kPo/0.jpg)](https://youtu.be/Ez6QAyh3kPo)
+[![Track 1](http://img.youtube.com/vi/c4xeH3n3YHI/0.jpg)](https://youtu.be/c4xeH3n3YHI)
+[![Track 2](http://img.youtube.com/vi/1QS6gAjilr4/0.jpg)](https://youtu.be/1QS6gAjilr4)
 
 The car now drives very smoothly on both tracks, with no major problem areas on the tracks. I think I could have done it with a lot less images, if only I had realized the power of data augmentation sooner. The two things that had the most visible effect during testing were adding random brightness and cropping more of the image from all sides. This supplied much more variety and much less irrelavent data, making my neural network much more powerful in its learning. If I were to do it again, I would implement a few more methods of image augmentation right away and drive less.
 
