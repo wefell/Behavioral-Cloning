@@ -47,7 +47,7 @@ The model includes RELU activation functions to introduce nonlinearity (code lin
 
 ####2. Attempts to reduce overfitting in the model 
 
-Roughly half of the training data was captured by driving around the tracks in the opposite direction. All images were augmented by applying a random percent of brightness change. All images were duplicated and flipped to avoid the model overfitting to one steering direction. The model was trained and validated on different data sets. The model was also tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+Roughly half of the training data was captured by driving around the tracks in the opposite direction. A random change of brightness was applied to all images to introduce more variety in the data. All images were duplicated and flipped to avoid the model overfitting to one steering direction. Dropout was applied after every convolutional layer, since they have plenty of connections. This should help reduce overfitting. The model was trained and validated on different data sets. The model was also tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
 
@@ -65,11 +65,13 @@ For details about how I created the training data, see the next section.
 
 The strategy for deriving a model architecture was to find a model that has proven success, rather than to reinvent the wheel. Many Udacity students have reported success with [Nvidia's CNN designed for self-driving cars](https://arxiv.org/pdf/1604.07316v1.pdf).
 
-The model immediately performed well, but was showing signs of overfitting. I experimented with adding dropout to a variety of combination of layers, with little if any improvement. The car would zig-zag on parts of the track, drive very smoothly on other parts, and drive straight off the track on otherts. This indicated that the model was still overfitting to parts of the data and not generalizing.
+The model immediately performed well, but was showing signs of overfitting. The car would zig-zag on parts of the track, drive very smoothly on other parts, and drive straight off the track on otherts. This indicated that the model was overfitting to parts of the data and not generalizing.
 
 To combat the overfitting, I drove both tracks in both directions. This included center driving and recovery maneuvers. When the car showed signs of trouble in certain parts of the track, I would go back and drive that part of the track with center driving and recovery maneuvers, in both directions. However, as soon as the car improved on one part of the track, it would performed worse on other parts. This told me that the model was still not generalizing well enough.
 
 The final step was to apply random brightness levels to all of the images. This provided enough variance in the data to enable the model to generalize, rather than to memorize. I saw an immediate and drastic improvement in the car's ability to navigate the track. It performed well in all areas of the track and recoverered well. It was immediately obvious that the model had learned and was generalizing well.
+
+The model was working well without dropout applied, but I applied dropout as a last step to ensure that overfitting is reduced as much as possible. The model took longer to train, but I believe it is a more robust network with dropout applied.
 
 At the end of the process, the vehicle is able to drive autonomously around both tracks without leaving the road.
 
@@ -82,14 +84,19 @@ The final model architecture consisted of a convolution neural network with the 
 * Cropping2D (new image shape is 65x260x3)
 * Conv Layer (5x5x3 filter, stride 2 to 31x128x24)
 * Relu
+* Dropout (0.5 dropout rate)
 * Conv Layer (5x5x24 filter, stride 2 to 14x62x36)
 * Relu
+* Dropout (0.5 dropout rate)
 * Conv Layer (5x5x36 filter, stride 2 to 5x29x48)
 * Relu
+* Dropout (0.5 dropout rate)
 * Conv Layer (3x3x48 filter, stide 1 to 3x27x64)
 * Relu
+* Dropout (0.5 dropout rate)
 * Conv Layer (3x3x64 filter, stide 1 to 1x25x64)
 * Relu
+* Dropout (0.5 dropout rate)
 * Flatten (1536 nodes)
 * Fully connected layer (with added dropout) (1600->100)
 * Fully connected layer (with added dropout) (100->50)
@@ -155,14 +162,12 @@ After collecting and augmenting the data, I had a total of 906800 images. I then
 
 
 
-The dataset was shuffled and split into training and valdiation sets. The validation set consisten of a random 20% of the data. Both sets were shuffled and the neural network was trained with 13824 images per epoch for 15 epochs. Training and validation losses were 0.0329 and 0.0291, respectively. 
-
-![alt text](./images/Screen Shot 2017-02-17 at 1.38.01 PM.png "trained") 
+The dataset was shuffled and split into training and valdiation sets. The validation set consisten of a random 20% of the data. Both sets were shuffled and the neural network was trained with 13824 images per epoch for 200 epochs. I implementated a callback using ModelCheckpoint and set it to save a new model.h5 every time the validation loss improved. After the model was done training tested the various weights. Through a process of trial and error I decided to use the weights from epoch 196 where training and validation losses were 0.03 and 0.02, respectively. Using these weights, the car drives smoothly down the center of the road in both track 1 and track 2.
 
 Below is the car driving on both tracks 1 and 2:
 
 [![Track 1](http://img.youtube.com/vi/c4xeH3n3YHI/0.jpg)](https://youtu.be/c4xeH3n3YHI)
 [![Track 2](http://img.youtube.com/vi/1QS6gAjilr4/0.jpg)](https://youtu.be/1QS6gAjilr4)
 
-The car now drives very smoothly on both tracks, with no major problem areas on the tracks. I think I could have done it with a lot less images, if only I had realized the power of data augmentation sooner. The two things that had the most visible effect during testing were adding random brightness and cropping more of the image from all sides. This supplied much more variety and much less irrelavent data, making my neural network much more powerful in its learning. If I were to do it again, I would implement a few more methods of image augmentation right away and drive less.
+The car now drives with no major problem areas on the tracks. I think I could have done it with a lot less images, if only I had realized the power of data augmentation sooner. The two things that had the most visible effect during testing were adding random brightness and cropping more of the image from all sides. This supplied much more variety and much less irrelavent data, making my neural network much more powerful in its learning. If I were to do it again, I would implement a few more methods of image augmentation right away and drive less.
 
